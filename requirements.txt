@@ -3,5 +3,3 @@ asyncio
 requests
 bs4
 lxml
-time
-sys
