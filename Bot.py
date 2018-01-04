@@ -222,12 +222,21 @@ async def on_message(message):
                 found_items_2.remove(found_items_2[0])
             except:
                 pass
-        print(found_items)
-        string_to_send = ":moneybag: Cheapest item results:\n"
+        string_to_send = ":moneybag: Cheapest item results:\n```"
         #for x in range(0,len(found_items)/2):
+        failed = 0
+        print(found_items)
+        half_len = int(len(found_items)/2)
+        print(half_len)
         for x in range(0,5):
-            string_to_send += "- **"+found_items[x]+"** selling for **"+found_items[x+5]+"**\n"
+            y = x+1
+            try:
+                string_to_send += str(y)+". "+found_items[x]+" selling for "+found_items[x+half_len]+" TC\n"
+            except:
+                pass
+        string_to_send += "```"
         await client.send_message(message.channel, string_to_send)
+        
             
                 
                 
