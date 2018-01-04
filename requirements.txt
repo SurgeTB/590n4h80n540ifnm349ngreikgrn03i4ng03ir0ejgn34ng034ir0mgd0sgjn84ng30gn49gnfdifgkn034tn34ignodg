@@ -1,0 +1,8 @@
+discord.py
+asyncio
+http.client
+requests
+bs4
+lxml
+time
+sys
