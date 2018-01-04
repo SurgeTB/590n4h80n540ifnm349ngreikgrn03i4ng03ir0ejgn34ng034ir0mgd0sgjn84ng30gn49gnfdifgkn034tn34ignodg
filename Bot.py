@@ -140,13 +140,13 @@ async def on_message(message):
                 found_items.append(found_item.text_content()) #add all results to list
             try:
                 final_items.append(found_items[3])
-                await client.send_message(message.channel, ":white_check_mark: The cheapest result for '"+item_final+"' is being sold for **"+final_items[1]+" TC**.")
+                await client.send_message(message.channel, ":moneybag: The cheapest result for '"+item_final+"' is being sold for **"+final_items[1]+" TC**.")
             except:
                 await client.send_message(message.channel, ":no_entry_sign: No results found")
         else:
             await client.send_message(message.channel, ":no_entry_sign: No results found")
     #http://forum.toribash.com/tori_inventory.php?username=heat
-
+####################################################################################################################################################################################
     if message.content.startswith("-tc"):
         tc_a = []
         for a in range(0,len(message.content)):
@@ -171,7 +171,68 @@ async def on_message(message):
         for i in range(0,len(found_dd_a)-1):
             found_dd_a.remove(found_dd_a[0])
         await client.send_message(message.channel, ":white_check_mark: **"+tc_user_final+"** has **"+found_dd_a[0]+" TC**.")
+####################################################################################################################################################################################
+    if message.content.startswith("-5price"):            
+        await client.send_message(message.channel, ":arrows_counterclockwise: Checking prices...")
+        content_price = []
+        for x in range(0,len(message.content)):
+            content_price.append(message.content[x])
+        for o in range(0,8):
+            content_price.remove(content_price[0])
+        item_final = ""
+        for z in range(0,len(content_price)):
+            item_final += content_price[z]
+        print(item_final)
+        ###
+        url = "http://forum.toribash.com/tori_market.php"
             
+        # Start a session so we can have persistant cookies
+        session_requests = requests.session()
+
+        # This is the form data that the page sends when logging in
+        login_data = {
+            'username': "AdvntrBank",
+            'password': "Luxray12345",
+            'submit': 'submit',
+        }
+
+        # Authenticate
+        r = session_requests.post(url, data=login_data)
+        time.sleep(2)
+        url = "http://forum.toribash.com/tori_market.php?action=search&item="+item_final+"&username=&max=0&maxQi=0"
+        # Try accessing a page that requires you to be logged in
+            
+        result = session_requests.get(url,headers = dict(referer = url))
+        tree2 = html.fromstring(result.content)
+        final_items = []
+        found_items = []
+        for found_item in tree2.xpath("//td[@class='market_item_name']/a"): #search for <title>
+            if len(found_items) < 5:
+                found_items.append(found_item.text_content()) #add all results to list
+        len_orig = len(found_items)
+        final_items.append(found_items[0])
+        found_items_2 = []
+        for found_item in tree2.xpath("//tr[@class]/td"): #search for <title>
+            found_items_2.append(found_item.text_content()) #add all results to list
+        for x in range(0,5):
+            try:
+                for x in range(0,3):
+                    found_items_2.remove(found_items_2[0])
+                found_items.append(found_items_2[0])
+                found_items_2.remove(found_items_2[0])
+            except:
+                pass
+        print(found_items)
+        string_to_send = ":moneybag: Cheapest item results:\n"
+        #for x in range(0,len(found_items)/2):
+        for x in range(0,5):
+            string_to_send += "- **"+found_items[x]+"** selling for **"+found_items[x+5]+"**\n"
+        await client.send_message(message.channel, string_to_send)
+            
+                
+                
+        
+        
         
         
 
