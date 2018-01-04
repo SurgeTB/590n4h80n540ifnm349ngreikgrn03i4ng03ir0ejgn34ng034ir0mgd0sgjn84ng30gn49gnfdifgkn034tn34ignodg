@@ -17,15 +17,12 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    await client.change_presence(game=discord.Game(name="owo"))
+    await client.change_presence(game=discord.Game(name="-help"))
 
 
 
 @client.event
 async def on_message(message):
-    if message.content.startswith("-clan"):
-        print(message.content)
-        await client.send_message(message.channel, discord.Message.author)
 ####################################################################################################################################################################################
     if message.content.startswith("-lastpost"):
         print(message.content)
@@ -236,8 +233,18 @@ async def on_message(message):
                 pass
         string_to_send += "```"
         await client.send_message(message.channel, string_to_send)
-        
-            
+####################################################################################################################################################################################
+    if message.content.startswith("-help"):
+        newline = "\n"
+        await client.send_message(message.channel, ":incoming_envelope: Sending you a DM!")
+        await client.send_message(message.author, ":question: Current commands:"
+                                  +newline+"```-deac <user> - View the contents of user's inventory"
+                                  +newline+"-price <item> - View the cheapest price of an item on the market"
+                                  +newline+"-5price <item> - View the 5 cheapest prices of an item on the market"
+                                  +newline+"-help - Access a list of commands"
+                                  +newline+"-lastpost - View the last post on the forum"
+                                  +newline+"-tc <user> - View the amount of TC a user has```")
+                                  
                 
                 
         
