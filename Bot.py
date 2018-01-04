@@ -244,6 +244,19 @@ async def on_message(message):
                                   +newline+"-help - Access a list of commands"
                                   +newline+"-lastpost - View the last post on the forum"
                                   +newline+"-tc <user> - View the amount of TC a user has```")
+####################################################################################################################################################################################
+    if message.content.startswith("-join"):
+        message_a = []
+        for x in range(0,len(message.content)):
+            message_a.append(message.content[x])
+        for x in range(0,6):
+            message_a.remove(message_a[0])
+        room_join = ""
+        for x in range(0,len(message_a)):
+            room_join += message_a[x]
+        await client.send_message(message.channel, ":arrow_forward: steam://run/248570//+connect%20join%20"+room_join)
+            
+            
                                   
                 
                 
