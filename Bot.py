@@ -255,9 +255,47 @@ async def on_message(message):
         for x in range(0,len(message_a)):
             room_join += message_a[x]
         await client.send_message(message.channel, ":arrow_forward: steam://run/248570//+connect%20join%20"+room_join)
+####################################################################################################################################################################################            
+    if message.content.startswith("-stats"):
+        message_a = []
+        for x in range(0,len(message.content)):
+            message_a.append(message.content[x])
+        for x in range(0,7):
+            message_a.remove(message_a[0])
+        embed_user = ""
+        for x in range(0,len(message_a)):
+            embed_user += message_a[x]
+        ###
+
+        url = "http://forum.toribash.com/member.php?username="+embed_user
+        # Try accessing a page that requires you to be logged in
+        session_requests = requests.session()
+        
+        result = session_requests.get(url,headers = dict(referer = url))
+        tree4 = html.fromstring(result.content)
+        found_dt_a = []
+        for found_dt in tree4.xpath("//dl[@class='smallfont list_no_decoration profilefield_list']/dt"):
+            found_dt_a.append(found_dt.text_content())
+
+        found_dd_a_1 = []
+        for found_dd_1 in tree4.xpath("//dl[@class='smallfont list_no_decoration profilefield_list']/dd"):
+            found_dd_a_1.append(found_dd_1.text_content())
+
+        found_img_a = []            
+        for found_img in tree4.xpath("//td/img/@src"):
+            found_img_a.append(found_img)
+
+        ###
             
-            
-                                  
+        embed = discord.Embed(title="Username", description=embed_user, color=0xff0000)
+        embed.set_thumbnail(url=found_img_a[0])
+        for e in range(0,len(found_dt_a)):
+            embed.add_field(name=found_dt_a[e], value=found_dd_a_1[e], inline=True)
+
+        #embed.add_field(name="Field2", value="test2", inline=True)
+        embed.set_author(name=embed_user, icon_url=found_img_a[0])
+        
+        await client.send_message(message.channel, embed=embed)
                 
                 
         
