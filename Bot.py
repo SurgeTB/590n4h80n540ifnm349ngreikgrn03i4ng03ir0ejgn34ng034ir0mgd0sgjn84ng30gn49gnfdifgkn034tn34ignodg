@@ -287,13 +287,12 @@ async def on_message(message):
 
         ###
             
-        embed = discord.Embed(color=0xff0000)
+        embed = discord.Embed(title=embed_user, color=0xff0000)
         embed.set_thumbnail(url=found_img_a[0])
         for e in range(0,len(found_dt_a)):
             embed.add_field(name=found_dt_a[e], value=found_dd_a_1[e], inline=True)
 
         #embed.add_field(name="Field2", value="test2", inline=True)
-        embed.set_author(name=embed_user, icon_url=found_img_a[0])
         
         await client.send_message(message.channel, embed=embed)
                 
