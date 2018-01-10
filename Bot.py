@@ -90,7 +90,10 @@ async def on_message(message):
         print(deactive)
         for x in range(0,len(deactive)):
             if not deactive[x] == "Set (EMPTY)":
-                items_final += deactive[x]+"\n"
+                if x != len(deactive):
+                    items_final += deactive[x]+"\n"
+                else:
+                    items_final += deactive[x]
         await client.send_message(message.author, ":white_check_mark: Here's what **"+user_final+"** has in their deactivated inventory:\n```"+items_final+
                                       " ```\n**Nothing here?** either they have an empty inventory or there's too much stuff for Discord to put in 1 message.\nhttp://forum.toribash.com/tori_inventory.php?username="+user_final)
 ####################################################################################################################################################################################
@@ -306,7 +309,6 @@ async def on_message(message):
 def setup():
     client.run("Mzk3OTIyMjc1NzkxMzM5NTIw.DS3BlA.MW-21dK35PTbv7FtAXGHyqVYLq8")
 setup()
-
 
 
 
