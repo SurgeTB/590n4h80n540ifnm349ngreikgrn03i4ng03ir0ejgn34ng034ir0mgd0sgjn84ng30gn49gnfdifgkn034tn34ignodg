@@ -1,1 +1,1 @@
-# surge-epic-bot-
+# Discord bot
